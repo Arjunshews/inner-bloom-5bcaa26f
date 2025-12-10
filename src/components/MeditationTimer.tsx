@@ -10,8 +10,8 @@ interface MeditationTimerProps {
   onClose?: () => void;
 }
 
-// Ambient music URL (royalty-free meditation music)
-const AMBIENT_MUSIC_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3";
+// Nature sounds URL (royalty-free forest ambience with birds)
+const AMBIENT_MUSIC_URL = "https://cdn.pixabay.com/audio/2022/03/10/audio_4dedf5bf94.mp3";
 
 const MeditationTimer = ({ 
   initialMinutes = 10, 
