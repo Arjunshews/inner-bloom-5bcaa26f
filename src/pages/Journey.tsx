@@ -515,7 +515,9 @@ const Journey = () => {
 
   const getStatus = (day: number): "completed" | "current" | "locked" => {
     if (completedDays.includes(day)) return "completed";
-    return "current"; // All days are accessible
+    // Day 1 is always accessible, subsequent days unlock when previous day is completed
+    if (day === 1 || completedDays.includes(day - 1)) return "current";
+    return "locked";
   };
 
   const handleMarkComplete = (day: number) => {
