@@ -194,36 +194,20 @@ const MeditationTimer = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-background via-background to-sage/5 flex items-center justify-center overflow-hidden">
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-sage/5 blur-3xl"
-            style={{
-              width: `${200 + i * 100}px`,
-              height: `${200 + i * 100}px`,
-              left: `${10 + i * 15}%`,
-              top: `${20 + (i % 3) * 20}%`,
-              animation: `float ${8 + i * 2}s ease-in-out infinite`,
-              animationDelay: `${i * 0.5}s`,
-            }}
-          />
-        ))}
-      </div>
+    <div className="fixed inset-0 z-[100] bg-[#0a0a0a] flex items-center justify-center overflow-hidden">
+      {/* Close button - top right */}
+      {onClose && (
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 z-20 p-3 text-white/40 hover:text-white/80 transition-colors rounded-full hover:bg-white/5"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
 
       <div className="relative z-10 text-center px-6">
-        {onClose && (
-          <button 
-            onClick={onClose}
-            className="absolute -top-16 right-0 p-3 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted/50"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        )}
 
-        <p className="text-sage font-medium tracking-widest uppercase text-sm mb-8 animate-fade-in-up">
+        <p className="text-white/60 font-medium tracking-widest uppercase text-sm mb-8 animate-fade-in-up">
           {title}
         </p>
 
@@ -243,11 +227,11 @@ const MeditationTimer = ({
               style={{
                 width: `${280 - i * 40}px`,
                 height: `${280 - i * 40}px`,
-                borderColor: `hsl(var(--sage) / ${0.1 + i * 0.08})`,
+                borderColor: `rgba(255, 255, 255, ${0.05 + i * 0.03})`,
                 borderWidth: `${1 + i * 0.5}px`,
                 transitionDelay: `${i * 100}ms`,
                 boxShadow: isRunning 
-                  ? `0 0 ${20 + i * 10}px hsl(var(--sage) / ${0.05 + i * 0.02})` 
+                  ? `0 0 ${20 + i * 10}px rgba(255, 255, 255, ${0.02 + i * 0.01})` 
                   : 'none',
               }}
             />
@@ -257,7 +241,7 @@ const MeditationTimer = ({
           <div
             className={cn(
               "absolute w-40 h-40 rounded-full transition-all duration-1000 ease-in-out",
-              "bg-gradient-to-br from-sage/20 via-sage/10 to-transparent",
+              "bg-gradient-to-br from-white/10 via-white/5 to-transparent",
               breathPhase === "inhale" && "scale-125 opacity-100",
               breathPhase === "hold" && "scale-125 opacity-90",
               breathPhase === "exhale" && "scale-90 opacity-70",
@@ -265,8 +249,8 @@ const MeditationTimer = ({
             )}
             style={{
               boxShadow: isRunning 
-                ? `0 0 60px hsl(var(--sage) / 0.3), inset 0 0 40px hsl(var(--sage) / 0.1)` 
-                : `0 0 30px hsl(var(--sage) / 0.15)`,
+                ? `0 0 80px rgba(255, 255, 255, 0.15), inset 0 0 40px rgba(255, 255, 255, 0.05)` 
+                : `0 0 40px rgba(255, 255, 255, 0.08)`,
             }}
           />
 
@@ -276,17 +260,16 @@ const MeditationTimer = ({
               cx="144"
               cy="144"
               r="130"
-              stroke="currentColor"
-              strokeWidth="4"
+              stroke="rgba(255, 255, 255, 0.1)"
+              strokeWidth="2"
               fill="none"
-              className="text-muted/30"
             />
             <circle
               cx="144"
               cy="144"
               r="130"
               stroke="url(#progressGradient)"
-              strokeWidth="4"
+              strokeWidth="3"
               fill="none"
               strokeLinecap="round"
               className="transition-all duration-1000"
@@ -295,21 +278,21 @@ const MeditationTimer = ({
             />
             <defs>
               <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(var(--sage))" />
-                <stop offset="100%" stopColor="hsl(var(--earth))" />
+                <stop offset="0%" stopColor="rgba(255, 255, 255, 0.6)" />
+                <stop offset="100%" stopColor="rgba(255, 255, 255, 0.2)" />
               </linearGradient>
             </defs>
           </svg>
 
           {/* Timer display */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-            <span className="font-display text-5xl font-semibold text-foreground tracking-tight">
+            <span className="font-display text-5xl font-light text-white tracking-tight">
               {formatTime(seconds)}
             </span>
             <span 
               className={cn(
-                "text-sm mt-3 transition-all duration-500 font-medium",
-                isRunning ? "text-sage" : "text-muted-foreground"
+                "text-sm mt-3 transition-all duration-500 font-light",
+                isRunning ? "text-white/70" : "text-white/40"
               )}
             >
               {isRunning ? getBreathText() : "Ready when you are"}
@@ -318,45 +301,43 @@ const MeditationTimer = ({
         </div>
 
         {/* Controls */}
-        <div className="flex items-center justify-center gap-6 mb-10">
-          <Button
-            variant="calm"
-            size="lg"
+        <div className="flex items-center justify-center gap-8 mb-10">
+          <button
             onClick={resetTimer}
-            className="w-14 h-14 rounded-full p-0 shadow-lg hover:shadow-xl transition-shadow"
+            className="w-14 h-14 rounded-full flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/5 transition-all"
           >
             <RotateCcw className="w-5 h-5" />
-          </Button>
+          </button>
 
-          <Button
-            variant="hero"
-            size="lg"
+          <button
             onClick={toggleTimer}
             className={cn(
-              "w-24 h-24 rounded-full p-0 shadow-xl hover:shadow-2xl transition-all",
-              isRunning && "animate-pulse"
+              "w-20 h-20 rounded-full flex items-center justify-center transition-all border border-white/20 hover:border-white/40",
+              isRunning 
+                ? "bg-white/10 text-white" 
+                : "bg-white/5 text-white/80 hover:bg-white/10"
             )}
             style={{
               boxShadow: isRunning 
-                ? '0 0 40px hsl(var(--sage) / 0.4)' 
-                : '0 10px 40px hsl(var(--sage) / 0.2)',
+                ? '0 0 60px rgba(255, 255, 255, 0.15)' 
+                : '0 0 30px rgba(255, 255, 255, 0.05)',
             }}
           >
             {isRunning ? (
-              <Pause className="w-10 h-10" />
+              <Pause className="w-8 h-8" />
             ) : (
-              <Play className="w-10 h-10 ml-1" />
+              <Play className="w-8 h-8 ml-1" />
             )}
-          </Button>
+          </button>
 
           <div className="w-14 h-14" />
         </div>
 
         {/* Volume control */}
-        <div className="flex items-center justify-center gap-3 max-w-xs mx-auto bg-muted/30 backdrop-blur-sm rounded-full px-4 py-3">
+        <div className="flex items-center justify-center gap-3 max-w-xs mx-auto">
           <button
             onClick={toggleMute}
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="p-2 text-white/40 hover:text-white/80 transition-colors"
           >
             {isMuted || volume === 0 ? (
               <VolumeX className="w-5 h-5" />
@@ -369,24 +350,24 @@ const MeditationTimer = ({
             onValueChange={handleVolumeChange}
             max={1}
             step={0.01}
-            className="w-32"
+            className="w-32 [&_[role=slider]]:bg-white/80 [&_[role=slider]]:border-0 [&_.relative]:bg-white/20 [&_[data-orientation=horizontal]>div]:bg-white/60"
           />
-          <span className="text-xs text-muted-foreground w-8">
+          <span className="text-xs text-white/40 w-8">
             {Math.round((isMuted ? 0 : volume) * 100)}%
           </span>
         </div>
 
         {/* Breathing guide indicator */}
         {isRunning && (
-          <div className="mt-8 flex items-center justify-center gap-2">
+          <div className="mt-8 flex items-center justify-center gap-3">
             {["inhale", "hold", "exhale"].map((phase) => (
               <div
                 key={phase}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
+                  "w-1.5 h-1.5 rounded-full transition-all duration-500",
                   breathPhase === phase 
-                    ? "bg-sage scale-150" 
-                    : "bg-muted-foreground/30"
+                    ? "bg-white scale-150" 
+                    : "bg-white/20"
                 )}
               />
             ))}
