@@ -622,19 +622,23 @@ const Journey = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="hero" size="lg" className="flex-1">
-                  Begin Session
-                </Button>
-                <Button 
-                  variant="calm" 
-                  size="lg" 
-                  onClick={() => handleMarkComplete(selectedDayData.day)}
-                  disabled={completedDays.includes(selectedDayData.day)}
-                >
-                  {completedDays.includes(selectedDayData.day) ? "Completed" : "Mark Complete"}
-                </Button>
-              </div>
+              <Button 
+                variant="hero" 
+                size="lg" 
+                onClick={() => {
+                  handleMarkComplete(selectedDayData.day);
+                  // Move to next day if not on the last day
+                  if (selectedDayData.day < 21) {
+                    setSelectedDay(selectedDayData.day + 1);
+                  } else {
+                    setSelectedDay(null);
+                  }
+                }}
+                disabled={completedDays.includes(selectedDayData.day)}
+                className="w-full"
+              >
+                {completedDays.includes(selectedDayData.day) ? "Completed" : "Mark Complete"}
+              </Button>
             </div>
           </div>
         </main>

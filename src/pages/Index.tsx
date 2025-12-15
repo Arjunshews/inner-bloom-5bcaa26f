@@ -24,7 +24,7 @@ const Index = () => {
           </p>
           <Button asChild variant="hero" size="xl">
             <Link to="/journey" className="gap-3">
-              Start Free Trial
+              Begin Your Journey
               <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>
@@ -36,7 +36,7 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <p className="text-muted-foreground text-sm">
-              © 2024 Serene. All rights reserved.
+              © 2025 Serene. All rights reserved.
             </p>
             <div className="flex items-center gap-8">
               <a href="#" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
