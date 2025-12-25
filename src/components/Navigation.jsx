@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Leaf } from "lucide-react";
+import { Leaf, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const location = useLocation();
@@ -42,6 +43,12 @@ const Navigation = () => {
                 )}
               </Link>
             ))}
+            <Button asChild variant="outline" size="sm" className="gap-2">
+              <Link to="/signin">
+                <User className="w-4 h-4" />
+                Sign In
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
