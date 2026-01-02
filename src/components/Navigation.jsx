@@ -1,10 +1,33 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Leaf, User } from "lucide-react";
+import { Leaf, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
 
   const links = [
     { href: "/", label: "Home" },
@@ -43,12 +66,24 @@ const Navigation = () => {
                 )}
               </Link>
             ))}
-            <Button asChild variant="outline" size="sm" className="gap-2">
-              <Link to="/signin">
-                <User className="w-4 h-4" />
-                Sign In
-              </Link>
-            </Button>
+            {user ? (
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={handleLogout}
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
+            ) : (
+              <Button asChild variant="outline" size="sm" className="gap-2">
+                <Link to="/auth">
+                  <User className="w-4 h-4" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
