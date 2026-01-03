@@ -1,15 +1,13 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import FeatureSection from "@/components/FeatureSection";
-import CursorEffect from "@/components/CursorEffect";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background cursor-none">
-      <CursorEffect />
+    <div className="min-h-screen bg-background">
       <Navigation />
       <Hero />
       <FeatureSection />
