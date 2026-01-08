@@ -33,6 +33,7 @@ const Navigation = () => {
     { href: "/", label: "Home" },
     { href: "/meditate", label: "Meditate" },
     { href: "/journey", label: "21-Day Journey" },
+    { href: "/chat", label: "AI Chat" },
   ];
 
   return (
