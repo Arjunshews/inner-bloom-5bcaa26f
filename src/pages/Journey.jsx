@@ -616,6 +616,7 @@ const Journey = () => {
                   } else {
                     setSelectedDay(null);
                   }
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 disabled={completedDays.includes(selectedDayData.day)}
                 className="w-full"
